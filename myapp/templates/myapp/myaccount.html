@@ -1,0 +1,24 @@
+{% extends 'myapp/base.html' %}
+{% block body_block %}
+    <h1>{{First_name}} {{Last_name}}</h1>
+
+    <h2>List of courses ordered</h2>
+    {% if order_list %}
+        {% for orders in order_list %}
+            <li> {{orders}} </li>
+        {% endfor %}
+    {% else %}
+        <p>No orders to show!!!!</p>
+    {% endif %}
+
+    {% if interested_list %}
+        <h2>List of Topics interested in</h2>
+        <ol>
+            {% for course in interested_list %}
+                <li> {{course}} </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>No interests to show!!!!</p>
+    {% endif %}
+{% endblock %}

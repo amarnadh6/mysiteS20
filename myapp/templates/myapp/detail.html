@@ -1,0 +1,10 @@
+{% extends 'myapp/base.html' %}
+{% block body_block %}
+    <br> <b>Topic name: </b> {{ tp.name }} <br>
+    <br> <b>category: </b> {{ tp.category }} <br>
+    <br> <b> Course Names: </b> <br>
+    {% for c in courses %}
+        <br> {{ c }} <br>
+    {% endfor %}
+{#    <p><a href="{% url 'myapp:index' %}">Index page </a></p>#}
+{% endblock %}

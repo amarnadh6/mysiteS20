@@ -1,0 +1,16 @@
+{% extends 'myapp/base.html' %}
+{% block body_block %}
+    <form action="{% url 'myapp:user_login' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="form-group">
+            <b><label for="username">Username:</label></b>
+            <input type="input" name="username" class="form-group" required>
+        </div>
+        <div>
+            <b><label for="password">Password:</label></b>
+            <input type="password" name="password" class="form-group" required>
+        </div>
+        <input type="submit" name="submit" value="login" class="btn btn-primary"/>
+    </form>
+{% endblock %}

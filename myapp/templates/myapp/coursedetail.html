@@ -1,0 +1,18 @@
+{% extends 'myapp/base.html' %}
+{% block body_block %}
+    <p>Topic: {{ course.topic.name}}</p>
+    <p>Course: {{ course.name}}</p>
+    <p>Price: {{ course.price}}</p>
+    <p>Category: {{ course.topic.category}}</p>
+    {% if course.for_everyone %}
+        <p>Course is for everyone</p>
+    {% else %}
+        <p>Course is not for everyone</p>
+    {% endif %}
+    <p>Number of people interested: {{ course.interested }}</p>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
