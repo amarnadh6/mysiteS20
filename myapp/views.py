@@ -108,7 +108,7 @@ def user_login(request):
                 login(request, user)
                 current_login = datetime.now()
                 request.session['last_login'] = current_login.strftime("%d-%m-%Y %H:%M:%S")
-                request.session.set_expiry(60)
+                request.session.set_expiry(3600)
                 request.session.get_expire_at_browser_close()
 
                 return HttpResponseRedirect(reverse('myapp:myaccount'))
