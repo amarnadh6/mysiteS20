@@ -121,7 +121,6 @@ def user_login(request):
 
 @login_required
 def user_logout(request):
-    logout(request)
     request.session.flush()
     return render(request, 'myapp/logout.html')
 
