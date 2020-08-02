@@ -7,18 +7,16 @@
 </head>
 <body>
 <div>
-<h1>{% block myhdg %}Hello {{ user.get_username }} {% endblock %}</h1>
-{% block body_block %}*** {% endblock %}
-</div>
-<hr />
-<div>
+<h1>{% block myhdg %}Hello User {% endblock %}</h1>
+{% block body_block %}
+    <p>You have been logged out</p>
 <ul>
-    <li class="hbar1"><a href = "{% url 'myapp:user_login' %}">Login Here</a></li>
-    <li class="hbar1"><a href = "{% url 'myapp:about' %}">Find out about our E-Learning site</a></li>
+    <li class="hbar1"><a href="{% url 'myapp:about' %}">Find out about our E-Learning site</a></li>
     <li class="hbar1"><a href = "{% url 'myapp:index' %}">Click here to return to main page</a></li>
     <li class="hbar1"><a href = "{% url 'myapp:courses' %}">Click here to go to course page</a></li>
-    <li class="hbar1"><a href = "{% url 'myapp:myaccount' %}">My Account</a></li>
+    <li class="hbar1"><a href = "{% url 'myapp:user_login' %}">Login Again</a></li>
 </ul>
+{% endblock %}
 </div>
 </body>
 </html>

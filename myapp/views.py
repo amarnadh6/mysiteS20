@@ -1,6 +1,7 @@
+from datetime import datetime
+from random import random
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-
 from .models import Topic, Course, Student, Order, User
 from django.shortcuts import get_list_or_404, render
 from django import forms
@@ -12,16 +13,36 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def index(request):
+    if request.session.test_cookie_worked():
+        print("Test cookie worked")
+        request.session.delete_test_cookie()
+        print("Test cookie deleted")
+    else:
+        print("Please enable cookies and try again.")
+
     top_list = Topic.objects.all().order_by('id')[:5]
     course_list = Course.objects.all().order_by('-price')[:5]
-    return render(request, 'myapp/index.html', {'top_list': top_list, 'course_list': course_list})
+    lst_login = ''
+    if 'last_login' in request.session:
+        lst_login = request.session.get('last_login')
+    else:
+        HttpResponse("Your last login was more than one hour ago")
+    return render(request, 'myapp/index.html', {'top_list': top_list, 'course_list': course_list, 'lst_login': lst_login})
+
 
     # Answer 2.C - Yes, we're passing course_list as 2nd context variable to display the top 5 courses
     # which have the highest price in descending order and whether a particular course is available
     # for everyone or not.
 
 def about(request):
-    return render(request, 'myapp/about.html')
+    request.session.set_test_cookie()
+    
+    # Number of visits to this view, as counted in the session variable.
+    about_visits = request.session.get('about_visits', 0)
+    request.session['about_visits'] = about_visits + 1
+    request.session.set_expiry(300)
+    return render(request, 'myapp/about.html', {'about_visits': about_visits})
+
 
 # 4.C No, we are not passing any context variable here.
 # 4.D Not Applicable
@@ -85,6 +106,11 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
+                current_login = datetime.now()
+                request.session['last_login'] = current_login.strftime("%d-%m-%Y %H:%M:%S")
+                request.session.set_expiry(60)
+                request.session.get_expire_at_browser_close()
+
                 return HttpResponseRedirect(reverse('myapp:myaccount'))
             else:
                 return HttpResponse('Your account is disabled.')
@@ -96,12 +122,13 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse(('myapp:index')))
+    request.session.flush()
+    return render(request, 'myapp/logout.html')
 
 @login_required
 def myaccount(request):
-    if Student.objects.get(id=request.user.id):
-        sid = Student.objects.filter(id=request.user.id)
+    sid = Student.objects.filter(id=request.user.id)
+    if sid:
         firstname = request.user.first_name
         lastname = request.user.last_name
         interest_list = sid.values_list('interested_in__name')

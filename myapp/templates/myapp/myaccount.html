@@ -11,14 +11,15 @@
         <p>No orders to show!!!!</p>
     {% endif %}
 
+    <h2>List of Topics interested in</h2>
     {% if interested_list %}
-        <h2>List of Topics interested in</h2>
-        <ol>
-            {% for course in interested_list %}
-                <li> {{course}} </li>
-            {% endfor %}
-        </ol>
+        {% for course in interested_list %}
+            <li> {{course}} </li>
+        {% endfor %}
     {% else %}
         <p>No interests to show!!!!</p>
     {% endif %}
+     <ul>
+    <li class="hbar1"><a href="{% url 'myapp:user_logout' %}">Log out</a></li>
+    </ul>
 {% endblock %}
