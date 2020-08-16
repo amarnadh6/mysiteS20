@@ -1,16 +1,27 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
+
 {% block body_block %}
-    <form action="{% url 'myapp:user_login' %}" method="post">
-       {% csrf_token %}
-{#        {{form.as_p}}#}
-        <div class="form-group">
-            <b><label for="username">Username:</label></b>
-            <input type="input" name="username" class="form-group" required>
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <div class="card" width="10px">
+        <div class="card-body">
+          <h2>Log In</h2><br />
+          <form action="{% url 'myapp:user_login' %}" method="post">
+            <label for="username"><b>Username</b></label> <br /><br />
+            <input type="text" placeholder="Enter Username" name="username" required><br /><br />
+            <label for="password"><b>Password</b></label><br /><br />
+            <input type="password" placeholder="Enter Password" name="password" required><br /><br />
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if request.GET.next %}
+                  	<input type="hidden" name="next" value="{{ request.GET.next }}">
+            {% endif %}
+            <button type="submit" class="btn btn-primary">Log in</button><br /><br />
+            <a class="m-auto" href="{% url 'password_reset' %}" class="btn btn-link">Forgot your password?</a>
+          </form>
         </div>
-        <div>
-            <b><label for="password">Password:</label></b>
-            <input type="password" name="password" class="form-group" required>
-        </div>
-        <input type="submit" name="submit" value="login" class="btn btn-primary"/>
-    </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

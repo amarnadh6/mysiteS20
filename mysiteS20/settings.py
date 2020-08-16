@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
+FIXTURE_DIRS = (os.path.join(PROJECT_DIR, 'fixtures'),)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +25,10 @@ SECRET_KEY = 'e!t9euy=wdms9nxo&sy(crm7lo1j6u7$gtmw+8978d41yxo$lo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 ALLOWED_HOSTS = []
 
@@ -32,13 +36,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    'myapp.apps.MyappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myapp.apps.MyappConfig',
+    'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -51,13 +58,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
 ROOT_URLCONF = 'mysiteS20.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +77,11 @@ TEMPLATES = [
         },
     },
 ]
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    )
+
 
 WSGI_APPLICATION = 'mysiteS20.wsgi.application'
 
@@ -82,7 +95,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -122,3 +134,22 @@ USE_TZ = True
 
 STATIC_URL = '/static/myapp/style.css/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/profile_pics/'
+
+LOGIN_REDIRECT_URL = '/myapp/'
+LOGIN_URL = '/myapp/user_login/'
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_URL = '/myapp/sent_emails'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 1025
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'bookstoremail@site.com'

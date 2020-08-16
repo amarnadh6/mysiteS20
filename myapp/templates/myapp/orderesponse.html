@@ -1,6 +1,23 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 {% block body_block %}
-     {{ msg }}
+    <div class="container-fluid">
+    <div class="row">
+<div class="alert alert-success col-md-8 col-md-offset-4" align="center"  role="alert">
+  <h4 class="alert-heading"> ✔ {{ msg }}</h4>
+        <br/>
+  <p>Thanks for Ordering with us. Hope to see you again 🙂</p>
+  <hr>
+        {% if updated_price > 0 %}
+  <p class="mb-0">Order Total: $ {{ updated_price }}</p>
+        {% else %}
+        <p class="mb-0">Sorry your Order total is $0</p>
+        {% endif %}
     <br/>
-     {{ updated_price }}
+     <a href="{% url 'myapp:placeorder' %}" class="btn btn-primary">Place Another Order</a>
+ <br/>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

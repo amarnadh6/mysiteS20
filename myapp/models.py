@@ -2,7 +2,7 @@ from django.db import models
 import datetime
 from decimal import Decimal
 from django.contrib.auth.models import User
-from django.utils import timezone
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.timezone import now
 
 
@@ -17,11 +17,16 @@ class Topic(models.Model):
 class Course(models.Model):
     topic = models.ForeignKey(Topic, related_name='courses', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[
+        MaxValueValidator(1000),
+        MinValueValidator(1)
+    ])
     for_everyone = models.BooleanField(default=True)
+    hours = models.IntegerField(default=1)
     description = models.TextField(max_length=300, null=True, blank=True)
     interested = models.PositiveIntegerField(default=0)
     stages = models.PositiveIntegerField(default=3)
+    comments = models.TextField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -36,6 +41,10 @@ class Student(User):
     school = models.CharField(max_length=50, null=True, blank=True)
     city = models.CharField(max_length=2, choices=CITY_CHOICES, default='WS')
     interested_in = models.ManyToManyField(Topic)
+    picture = models.ImageField(
+        upload_to='myapp/images',
+        blank=True, null=True
+    )
 
     def __str__(self):
         return self.first_name

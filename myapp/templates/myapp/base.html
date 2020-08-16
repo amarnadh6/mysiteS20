@@ -1,24 +1,70 @@
 <!DOCTYPE html>
-{% load static  %}
-<html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en" xmlns:font-family="http://www.w3.org/1999/xhtml">
 <head>
-<link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}" />
+    <meta charset="UTF-8">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Spectral SC' rel='stylesheet'>
+ <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}" />
 <title>E-Learning WebApp - {% block title %}Welcome!{% endblock %}</title>
+<style type="text/css">
+        body {
+          background: url({% static "myapp/background.jpg" %});
+          background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            opacity: inherit;
+             font-family: 'Cinzel';
+            font-size: 16px;
+        }
+        h1
+        {
+            font-family: 'Spectral SC';
+            font-size:2em;
+            text-decoration-color: dodgerblue;
+        }
+        </style>
 </head>
-<body>
-<div>
-<h1>{% block myhdg %}Hello {{ user.get_username }} {% endblock %}</h1>
-{% block body_block %}*** {% endblock %}
-</div>
-<hr />
-<div>
-<ul>
-    <li class="hbar1"><a href = "{% url 'myapp:user_login' %}">Login Here</a></li>
-    <li class="hbar1"><a href = "{% url 'myapp:about' %}">Find out about our E-Learning site</a></li>
-    <li class="hbar1"><a href = "{% url 'myapp:index' %}">Click here to return to main page</a></li>
-    <li class="hbar1"><a href = "{% url 'myapp:courses' %}">Click here to go to course page</a></li>
-    <li class="hbar1"><a href = "{% url 'myapp:myaccount' %}">My Account</a></li>
-</ul>
-</div>
+
+<body class="body">
+<nav class="navbar navbar-expand-lg bg-dark mynav" role="navigation" id="navbar">
+    <div class="container">
+       <h1>  {% block myhdg %}
+        Hello
+        {% if request.user.is_authenticated %}
+            {{user.first_name}}
+        {% else %}
+            User
+        {% endif %}
+      {% endblock %}
+ </h1>
+    <div class="navbar-nav ml-auto">
+        {% block links %}
+            {% if user.is_authenticated %}
+                <p class="hbar1"><a href = "{% url 'myapp:index' %}">Home</a></p>
+                <p class="hbar1"><a href = "{% url 'myapp:about' %}">About Us</a></p>
+                <p class="hbar1"><a href = "{% url 'myapp:courses' %}">Courses</a></p>
+                <p class="hbar1"><a href = "{% url 'myapp:placeorder' %}">Place Order</a></p>
+                <p class="hbar1"><a href = "{% url 'myapp:myaccount' %}">My Account</a></p>
+                <p class="hbar1"><a href = "{% url 'myapp:user_logout' %}">Logout</a></p>
+            {% else %}
+                <p class="hbar1"><a href = "{% url 'myapp:user_login' %}">LogIn</a></p>
+                <p class="hbar1"><a href=  "{% url 'password_reset' %}">Forgot Password</a></p>
+                <p class="hbar1"><a href = "{% url 'myapp:register' %}">Register</a></p>
+            {% endif %}
+        {% endblock %}
+    </div>
+  </div>
+</nav>
+
+<br/>
+<br/>
+     {% block body_block %}*** {% endblock %}
+
+
 </body>
 </html>

@@ -1,0 +1,26 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Password reset on 127.0.0.1:8000
+From: bookstoremail@site.com
+To: choudhak@uwindsor.ca
+Date: Fri, 14 Aug 2020 03:30:34 -0000
+Message-ID: 
+ <159737583413.7448.11367668279321520787@LAPTOP-4EC67F2H.hitronhub.home>
+
+
+You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+Please go to the following page and choose a new password:
+
+http://127.0.0.1:8000/reset/MQ/5j0-52c8ce184d59edefbe10/
+
+Your username, in case you’ve forgotten: group38
+
+Thanks for using our site!
+
+The 127.0.0.1:8000 team
+
+
+
+-------------------------------------------------------------------------------

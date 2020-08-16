@@ -1,15 +1,30 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 {% block body_block %}
+      <h2 font-size="5em" align ="center">Course List</h2></center>
     {% if courlist %}
-    <h2>List of Courses</h2>
-    <ol>
-    {% for c in courlist %}
-        <li> <a href="/myapp/courses/{{c.id}}">{{ c.name}}</a> </li>
-    {% endfor %}
-    </ol>
+   <div class="container-fluid mb-3">
+    <div class="row justify-content row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+          {% for c in courlist %}
+            <div class="col-lg-3 d-flex align-items-stretch">
+                <div class="card border-primary mb-5">
+                    {% load static %}
+                      <img src="{% static "myapp/book.jpg" %}" alt="Book image"/>
+                    <div class="card-header">
+                       <h3>Course {{ c.id }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="/myapp/courses/{{c.id}}">{{ c.name}}</a></h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
     {% else %}
     <strong>There are no available courses for this topic!</strong>
     {% endif %}
+
     <br>
-    <a href="{%  url 'myapp:placeorder' %}">Place new order</a>
+    </div>
 {% endblock %}

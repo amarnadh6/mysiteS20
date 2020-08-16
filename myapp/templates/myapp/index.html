@@ -1,30 +1,46 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 {% block body_block %}
-    <p>Last Login</p>
-    {{ lst_login }}
-    {% if top_list %}
-    <h2>List of Topics</h2>
-    <ol>
-        {% for top in top_list %}
-        <li> <p> <a href="{% url 'myapp:detail' top.id %}">{{ top.name }}</a></p> </li>
+    <div  class="card-deck">
+     <div class="card border-success mb-3">
+    <div class="card-body">
+     {% if top_list %}
+      <h3 class="card-title">Topic List</h3>
+         <hr/>
+      {% for top in top_list %}
+        <h5> <a href="{% url 'myapp:detail' top.id %}">{{ top.name }}</a></h5>
+          <br/>
         {% endfor %}
-    </ol>
 {% else %}
     <strong>There are no available topics!</strong>
 {% endif %}
-
-{% if course_list %}
-    <h2>List of Courses</h2>
-        {% for course in course_list %}
+    </div>
+  </div>
+    <div class="card border-success mb-3">
+    <div class="card-body">
+     {% if top_list %}
+      <h3 class="card-title">Course list</h3>
+         <hr/>
+       {% for course in course_list %}
                 {% if course.for_everyone is True %}
-                </br>{{ course.id }}. {{ course }} <b> - is for everyone</b></br>
+                </br>
+                    <h5>{{ course.id }}. {{ course }} <b> - is for everyone</b></h5>
             {% else %}
-                </br>{{ course.id }}. {{ course }} <b> - is not for everyone</b></br>
+                    </br><h5>{{ course.id }}. {{ course }} <b> - is not for everyone</b></h5>
             {% endif %}
         {% endfor %}
 {% else %}
     <strong>There are no available courses!</strong>
 {% endif %}
+    </div>
+  </div>
+    <br/>
+    </div>
+       <p>Last Login:  {{ lst_login }}</p>
+
+
+
+
 
 {#<p><a href="/myapp/about">About page</a></p>#}
 {#<p><a href="{% url 'myapp:about' %}">About page </a></p>#}

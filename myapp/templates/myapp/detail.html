@@ -1,10 +1,24 @@
 {% extends 'myapp/base.html' %}
+{% load crispy_forms_tags %}
 {% block body_block %}
-    <br> <b>Topic name: </b> {{ tp.name }} <br>
-    <br> <b>category: </b> {{ tp.category }} <br>
-    <br> <b> Course Names: </b> <br>
-    {% for c in courses %}
-        <br> {{ c }} <br>
+<div class="row justify-content-center">
+<div class="card">
+<div class="card-header">
+<h3><b>{{ c.name }} Course Information</b> </h3>
+</div>
+<div class="card-body">
+  <h2>Topic Name</h2>
+  <p>
+   {{ tp.name }}
+  </p><br />
+  <h2> Course Name</h2>
+ {% for c in courses %}
+        <p><br> {{ c }} <br></p>
     {% endfor %}
-{#    <p><a href="{% url 'myapp:index' %}">Index page </a></p>#}
+  <br/>
+  <a href="{% url 'myapp:index' %}" class="btn btn-success" role="button">Go Back</a>
+<!-- <button class="btn btn-lg btn-block btn-outline-dark" type="button">Sign Up</button> -->
+</div>
+</div>
+</div>
 {% endblock %}
