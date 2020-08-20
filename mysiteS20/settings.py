@@ -135,7 +135,7 @@ USE_TZ = True
 STATIC_URL = '/static/myapp/style.css/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/profile_pics/'
+MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/myapp/'
 LOGIN_URL = '/myapp/user_login/'
@@ -144,7 +144,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-
 EMAIL_URL = '/myapp/sent_emails'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 EMAIL_HOST = 'localhost'
@@ -152,4 +151,4 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 1025
 EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'bookstoremail@site.com'
+DEFAULT_FROM_EMAIL = 'coursestore@site.com'

@@ -4,6 +4,7 @@ from decimal import Decimal
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.timezone import now
+from PIL import Image
 
 
 class Topic(models.Model):
@@ -18,8 +19,8 @@ class Course(models.Model):
     topic = models.ForeignKey(Topic, related_name='courses', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[
-        MaxValueValidator(1000),
-        MinValueValidator(1)
+        MaxValueValidator(200),
+        MinValueValidator(100)
     ])
     for_everyone = models.BooleanField(default=True)
     hours = models.IntegerField(default=1)
@@ -41,10 +42,11 @@ class Student(User):
     school = models.CharField(max_length=50, null=True, blank=True)
     city = models.CharField(max_length=2, choices=CITY_CHOICES, default='WS')
     interested_in = models.ManyToManyField(Topic)
-    picture = models.ImageField(
-        upload_to='myapp/images',
-        blank=True, null=True
-    )
+    # picture = models.ImageField(
+    #     upload_to='myapp/profile_pics',
+    #     blank=True, null=True,
+    #     default='myapp/profile_pics/kavish.jpg'
+    # )
 
     def __str__(self):
         return self.first_name
@@ -67,3 +69,19 @@ class Order(models.Model):
         for course in Order.objects.all()['course']:
             total += course.price
         return total
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    image = models.ImageField(default='profile_pics/default.png', upload_to='profile_pics')
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    def save(self):
+        super().save()
+        img = Image.open(self.image.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)

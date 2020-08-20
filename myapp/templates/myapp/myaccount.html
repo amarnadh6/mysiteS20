@@ -43,10 +43,12 @@
                     </fieldset>
                     <div class="content-section">
                         <div class="media">
-                             <img class="rounded-circle account-img"  src="{{user.picture.url}}" width="240"><br /><br />
+{#                             <img class="rounded-circle account-img"  src="{{user.picture.url}}" width="240"><br /><br />#}
                             <div class="media-body">
                                 <h2 class="account-heading">{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}</h2>
                                 <p class="text-secondary">{{ user.email }}</p>
+                                <p class="text-secondary">{{ user.city }}</p>
+                                <p class="text-secondary">{{ user.school }}</p>
                             </div>
                         </div>
                     </div>

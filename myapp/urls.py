@@ -3,7 +3,6 @@ from django.urls import path
 from django.views.static import serve
 from django.contrib.auth import views as auth_views
 from myapp import views
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
 app_name = 'myapp'
 
@@ -18,8 +17,4 @@ urlpatterns = [
     path(r'myaccount', views.myaccount, name="myaccount"),
     path(r'login', views.user_login, name="user_login"),
     path(r'logout', views.user_logout, name="user_logout"),
-    path('forgot_password/', views.forgot_password, name='forgot_password'),
-    path(r'media/', serve, {'document_root': settings.MEDIA_ROOT}),
-
-
 ]

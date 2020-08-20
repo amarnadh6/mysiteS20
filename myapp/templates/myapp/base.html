@@ -36,7 +36,7 @@
        <h1>  {% block myhdg %}
         Hello
         {% if request.user.is_authenticated %}
-            {{user.first_name}}
+            {{user.first_name}} {{user.last_name}}
         {% else %}
             User
         {% endif %}

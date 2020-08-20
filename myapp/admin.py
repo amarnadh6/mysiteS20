@@ -6,14 +6,14 @@ from django.utils.safestring import mark_safe
 from django.utils.html import format_html
 
 
-def add_50_to_hours(modeladmin, request, queryset):
+def add_50_to_hours(queryset):
     for course in queryset:
         course.hours += 10
         course.save()
     add_50_to_hours.short_description = 'Increase hours by 10'
 
 
-def upper_case_name(modeladmin, request, queryset):
+def upper_case_name(queryset):
     st = Student()
     for st in queryset:
         st.first_name = st.first_name.upper()
@@ -33,8 +33,8 @@ def user_info(obj):
 
 
 class StudentAdmin(admin.ModelAdmin):
-    fields = [('first_name', 'last_name'), 'city', 'school', 'interested_in', 'picture']
-    list_display = ('first_name', 'last_name', 'city', 'school', 'picture')
+    fields = [('first_name', 'last_name'), 'city', 'school', 'interested_in']
+    list_display = ('first_name', 'last_name', 'city', 'school')
     actions = [upper_case_name]
 
 
